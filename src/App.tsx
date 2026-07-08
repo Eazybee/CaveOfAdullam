@@ -63,11 +63,12 @@ export default function App() {
           </a>
           <nav className="hidden gap-8 text-sm md:flex">
             <a href="#events" className="hover:text-ember transition-colors">Events</a>
+            <a href="#recap" className="hover:text-ember transition-colors">Recap</a>
             <a href="#manifesto" className="hover:text-ember transition-colors">Our heart</a>
             <a href="#join" className="hover:text-ember transition-colors">Join us</a>
           </nav>
           <a
-            href="https://forms.gle/fs7fJUaoeVsXhU2G8"
+            href="https://forms.gle/iudkjzP7YpLtWZ3w9"
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-full border border-parchment/50 px-4 py-2 text-xs uppercase tracking-widest backdrop-blur-sm hover:bg-parchment hover:text-cave transition"
@@ -153,19 +154,22 @@ export default function App() {
                 date: 'Friday, July 3rd',
                 location: 'The Backyard — address shared on RSVP',
                 bring: 'A dish to share + your Bible',
-                rsvp: 'https://forms.gle/fs7fJUaoeVsXhU2G8',
+                ctaLabel: 'See the recap',
+                ctaHref: '#recap',
                 delay: 0,
               },
               {
                 num: '02',
-                vol: 'Vol. 02 — July',
-                title: 'Worship in the Park',
-                desc: 'Open-air singing as the sun goes down. Acoustic, unpolished, honest. Hands raised under a sky that\'s already declaring His glory.',
+                vol: 'Vol. 02 — July 17th',
+                title: 'Picnic with Christ',
+                desc: 'He makes us lie down in green pastures, He leads us beside quiet waters. Blankets under the tree, worship, the Word, and fellowship in the park.',
                 img: '/assets/event-worship.jpg',
-                alt: 'Worship gathering with hands raised at sunset',
-                date: null,
-                location: null,
-                bring: null,
+                alt: 'Friends gathered for a picnic and worship under a tree in the park',
+                date: 'Friday, July 17th',
+                location: 'The Park — address shared on RSVP',
+                bring: 'A picnic blanket + your Bible',
+                ctaLabel: 'Save my spot',
+                ctaHref: 'https://forms.gle/iudkjzP7YpLtWZ3w9',
                 delay: 100,
               },
               {
@@ -207,17 +211,17 @@ export default function App() {
                         <p className="text-xs uppercase tracking-[0.2em] text-ember mt-2">{event.bring}</p>
                       </div>
                     )}
-                    {event.rsvp && (
+                    {event.ctaHref && (
                       <a
-                        href={event.rsvp}
-                        target={event.rsvp.startsWith('http') ? '_blank' : undefined}
-                        rel={event.rsvp.startsWith('http') ? 'noopener noreferrer' : undefined}
+                        href={event.ctaHref}
+                        target={event.ctaHref.startsWith('http') ? '_blank' : undefined}
+                        rel={event.ctaHref.startsWith('http') ? 'noopener noreferrer' : undefined}
                         className="mt-6 inline-flex items-center gap-2 self-start rounded-full border border-foreground/30 px-5 py-2.5 text-sm font-medium text-foreground hover:border-ember hover:text-ember transition"
                       >
-                        Save my spot <span aria-hidden="true">→</span>
+                        {event.ctaLabel} <span aria-hidden="true">→</span>
                       </a>
                     )}
-                    {!event.rsvp && (
+                    {!event.ctaHref && (
                       <p> Coming soon</p>
                     )}
                   </div>
@@ -225,6 +229,60 @@ export default function App() {
               </FadeIn>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── Recap ── */}
+      <section id="recap" className="bg-background">
+        <div className="mx-auto max-w-7xl px-6 py-24 md:py-32">
+          <FadeIn className="mb-16 max-w-2xl">
+            <p className="mb-4 text-xs uppercase tracking-[0.3em] text-ember">The Recap</p>
+            <h2 className="font-display text-4xl text-balance md:text-6xl">
+              Moments from<br />
+              <span className="italic text-muted-foreground">the gatherings so far.</span>
+            </h2>
+          </FadeIn>
+
+          {[
+            {
+              vol: 'Vol. 01 — Potluck & BBQ',
+              media: [
+                { type: 'image', src: '/assets/recap/vol01-01.jpg', alt: 'Friends gathered around the table at the Vol. 01 potluck' },
+                { type: 'image', src: '/assets/recap/vol01-02.jpg', alt: 'Food and fellowship at the Vol. 01 potluck' },
+                { type: 'image', src: '/assets/recap/vol01-03.jpg', alt: 'The group praying together over the table at Vol. 01' },
+                { type: 'video', src: '/assets/recap/vol01-clip.mp4', poster: '/assets/recap/vol01-clip-poster.jpg' },
+              ],
+            },
+          ].map((album) => (
+            <FadeIn key={album.vol} className="mb-4">
+              <p className="mb-6 text-xs uppercase tracking-[0.25em] text-ember">{album.vol}</p>
+              <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+                {album.media.map((item, i) => (
+                  <div key={i} className="relative aspect-square overflow-hidden rounded-2xl bg-card ring-1 ring-border/60">
+                    {item.type === 'image' ? (
+                      <a href={item.src} target="_blank" rel="noopener noreferrer">
+                        <img
+                          src={item.src}
+                          alt={item.alt}
+                          loading="lazy"
+                          className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+                        />
+                      </a>
+                    ) : (
+                      <video
+                        src={item.src}
+                        poster={item.poster}
+                        controls
+                        playsInline
+                        preload="metadata"
+                        className="h-full w-full object-cover"
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </FadeIn>
+          ))}
         </div>
       </section>
 
@@ -266,21 +324,21 @@ export default function App() {
               <span className="italic text-parchment/80">Bring a friend.</span>
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-parchment/70">
-              Friday, July 3rd · The Backyard · Address shared on RSVP.<br />
-              Bring a dish to share and your Bible.
+              Friday, July 17th · The Park · Address shared on RSVP.<br />
+              Bring a picnic blanket and your Bible.
             </p>
             <div className="mt-10">
               <a
-                href="https://forms.gle/fs7fJUaoeVsXhU2G8"
+                href="https://forms.gle/iudkjzP7YpLtWZ3w9"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full bg-ember px-8 py-4 text-sm font-medium uppercase tracking-wider text-parchment hover:bg-primary transition shadow-lg shadow-cave/30"
               >
-                RSVP → Vol. 01
+                RSVP → Vol. 02
               </a>
             </div>
             <p className="mt-8 text-xs text-parchment/40 uppercase tracking-[0.2em]">
-              Details for Vol. 02 &amp; 03 coming soon
+              Details for Vol. 03 coming soon
             </p>
           </FadeIn>
         </div>
